@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5b21b6">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>Luminaria | Literacy &amp; Numeracy Learning App</title>
+<style>
+:root{--bg:#f4f1ff;--card:#fff;--tx:#202124;--pri:#4c1d95;--soft:#ede9fe;--bd:#ddd6fe;--mut:#666;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17122b;--card:#241b3d;--tx:#f1eefc;--pri:#c4b5fd;--soft:#33265a;--bd:#4a3a7a;--mut:#b5aed0}}
+:root[data-theme="dark"]{--bg:#17122b;--card:#241b3d;--tx:#f1eefc;--pri:#c4b5fd;--soft:#33265a;--bd:#4a3a7a;--mut:#b5aed0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+button,.card,.option{touch-action:manipulation;user-select:none;-webkit-user-select:none}
+body{font-family:"Segoe UI",Roboto,Arial,Helvetica,sans-serif,"Apple Color Emoji","Noto Color Emoji"}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+header{background:linear-gradient(135deg,#4c1d95,#7c3aed);color:#fff;padding:16px 20px;position:sticky;top:env(safe-area-inset-top,0px);z-index:10;box-shadow:0 3px 12px rgba(0,0,0,.18)}
+.header-inner{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:46px;height:46px;border-radius:14px;background:#fff;color:#6d28d9;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:bold}
+.logo h1{font-size:23px}.logo small{display:block;opacity:.85;margin-top:2px}
+.points{background:rgba(255,255,255,.18);padding:10px 15px;border-radius:20px;font-weight:bold;white-space:nowrap}
+main{max-width:1100px;margin:auto;padding:25px 18px 60px}
+.page{display:none}.page.active{display:block}
+.hero{background:var(--soft);border-radius:25px;padding:30px;margin-bottom:22px;border:1px solid var(--bd)}
+.hero h2{font-size:34px;color:var(--pri);margin-bottom:8px}
+.hero p{font-size:17px;line-height:1.6;max-width:750px}
+.hero strong{color:var(--pri)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:17px;margin-top:22px}
+.card{background:var(--card);border-radius:20px;padding:23px;border:1px solid var(--bd);box-shadow:0 4px 12px rgba(0,0,0,.06);cursor:pointer;transition:.2s}
+.card:hover{transform:translateY(-4px)}
+.card-icon{font-size:38px;margin-bottom:12px}
+.card h3{color:var(--pri);margin-bottom:8px}
+.card p{color:var(--mut);line-height:1.5}
+.btn{border:0;border-radius:12px;padding:12px 18px;font-size:15px;font-weight:bold;cursor:pointer;margin:3px 4px 3px 0}
+.btn-primary{background:#6d28d9;color:#fff}.btn-primary:hover{background:#4c1d95}
+.btn-secondary{background:var(--soft);color:var(--pri)}
+.btn-light{background:var(--card);color:var(--pri);border:1px solid var(--bd)}
+button:disabled{opacity:.5;cursor:not-allowed}
+button:focus-visible,.option:focus-visible,input:focus-visible{outline:3px solid #f59e0b;outline-offset:2px}
+.section-title{margin:26px 0 4px;color:var(--pri)}
+.module-header{background:#4c1d95;color:#fff;border-radius:20px;padding:25px;margin-bottom:20px}
+.module-header h2{font-size:27px;margin-bottom:7px}
+.problem-box{background:var(--card);border-radius:20px;padding:25px;box-shadow:0 5px 18px rgba(0,0,0,.08);margin-bottom:20px}
+.problem{font-size:20px;line-height:1.6;padding:18px;background:var(--soft);border-left:6px solid #7c3aed;border-radius:12px;margin:14px 0}
+.pic{text-align:center;margin:10px 0}
+.em{font-size:30px;line-height:1.5;letter-spacing:2px;word-break:break-word}
+.em.big{font-size:56px}
+.grp{display:inline-block;background:var(--soft);border:2px dashed var(--bd);border-radius:12px;padding:4px 8px;margin:4px;font-size:22px}
+.step{margin:17px 0}
+.step label{display:block;font-weight:bold;margin-bottom:8px;color:var(--pri)}
+.option-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0}
+.option{padding:13px;border:2px solid var(--bd);background:var(--card);border-radius:12px;cursor:pointer;text-align:center;font-weight:bold}
+.option:hover{background:var(--soft)}
+.option.big{font-size:38px}
+.option.good{border-color:#059669;background:#ecfdf5;color:#065f46}
+.option.bad{border-color:#dc2626;background:#fef2f2;color:#991b1b}
+.option.locked{pointer-events:none}
+input{width:100%;padding:13px;border:2px solid var(--bd);border-radius:10px;font-size:18px;background:var(--card);color:var(--tx)}
+.feedback{display:none;padding:16px;border-radius:14px;margin-top:14px;line-height:1.6}
+.feedback.show{display:block}
+.feedback.success{background:#ecfdf5;border:1px solid #86efac;color:#065f46}
+.feedback.error{background:#fef2f2;border:1px solid #fca5a5;color:#991b1b}
+.feedback.info{background:#eff6ff;border:1px solid #93c5fd;color:#1e40af}
+.progress-wrap{background:var(--bd);height:12px;border-radius:20px;overflow:hidden}
+.progress-bar{height:100%;background:#7c3aed;transition:.4s}
+.qhead{display:flex;justify-content:space-between;font-weight:bold;color:var(--pri);margin-bottom:8px}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.nav button{border:0;background:var(--card);color:var(--pri);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:bold;border:1px solid var(--bd)}
+.nav button:hover{background:var(--soft)}
+.end{text-align:center;padding:20px}.end .big{font-size:72px}
+.hidden{display:none!important}
+footer{text-align:center;padding:25px;color:var(--mut);font-size:13px}
+@media(max-width:600px){.hero h2{font-size:26px}.hero{padding:22px}.problem{font-size:18px}.logo small{display:none}}
+
+.acro{font-size:clamp(14px,2.6vw,17px);line-height:1.55;color:var(--mut);margin:0 0 14px;max-width:760px}
+.acro b{color:var(--pri);font-size:1.12em}
+.tagline{font-size:clamp(18px,3.4vw,22px);font-weight:bold;color:var(--pri);line-height:1.5;margin-bottom:6px}
+.chip{display:inline-block;background:var(--soft);color:var(--pri);border:1px solid var(--bd);border-radius:20px;padding:3px 11px;font-size:13px;font-weight:bold;margin-top:8px}
+.big-card{text-align:center;padding:34px 22px}.big-card .card-icon{font-size:56px}.big-card h3{font-size:24px}
+.card:focus-visible{outline:3px solid #f59e0b;outline-offset:2px}
+.passage{text-align:left;background:var(--soft);border:1px solid var(--bd);border-radius:14px;padding:18px 20px;line-height:1.75;font-size:17px;max-height:340px;overflow:auto;margin:6px 0 4px}
+.passage h4{text-align:center;color:var(--pri);font-size:19px;margin-bottom:10px}
+.passage p{margin-bottom:10px}.passage.verse p{text-align:center}
+.pcard{display:flex;align-items:center;gap:14px}.pnum{flex:0 0 42px;height:42px;border-radius:50%;background:#6d28d9;color:#fff;font-weight:bold;display:flex;align-items:center;justify-content:center}
+.pcard h3{margin:0 0 4px;font-size:17px}.pcard p{font-size:14px}
+.lang-card{text-align:center;padding:38px 20px}.lang-card .card-icon{font-size:60px}.lang-card h3{font-size:26px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .option.good{background:#064e3b;color:#a7f3d0}:root:not([data-theme="light"]) .option.bad{background:#7f1d1d;color:#fecaca}}
+
+#cover{position:fixed;inset:0;z-index:100;background:linear-gradient(160deg,#2e1065,#6d28d9 55%,#a78bfa);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;overflow:hidden;transition:opacity .5s,transform .5s}
+#cover.leave{opacity:0;transform:scale(1.05);pointer-events:none}
+#cover .mark{width:96px;height:96px;border-radius:28px;background:#fff;color:#6d28d9;font-size:56px;font-weight:bold;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.3);animation:pop 2.4s ease-in-out infinite}
+#cover h1{font-size:clamp(38px,9vw,64px);letter-spacing:6px;margin:22px 0 6px}
+#cover .tag{font-size:clamp(16px,3.6vw,22px);opacity:.92;margin-bottom:26px}
+#cover .float{font-size:clamp(28px,6vw,42px);margin-bottom:30px;letter-spacing:10px}
+#cover .enter{background:#fff;color:#4c1d95;font-size:20px;padding:16px 42px;border-radius:40px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+#cover .enter:hover{background:#ede9fe}
+#cover small{margin-top:26px;opacity:.75;max-width:420px;line-height:1.5}
+.bg{position:absolute;font-size:46px;opacity:.14;animation:drift 9s ease-in-out infinite}
+@keyframes pop{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes drift{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-22px) rotate(8deg)}}
+@media(prefers-reduced-motion:reduce){#cover *{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="cover" role="dialog" aria-label="Luminaria">
+<span class="bg" style="left:8%;top:12%">📖</span><span class="bg" style="right:10%;top:18%;animation-delay:-3s">🔢</span><span class="bg" style="left:14%;bottom:14%;animation-delay:-5s">✏️</span><span class="bg" style="right:12%;bottom:16%;animation-delay:-2s">🔤</span><span class="bg" style="left:46%;top:6%;animation-delay:-6s">π</span>
+<div class="mark">✦</div>
+<h1>LUMINARIA</h1>
+<div class="tag" style="font-weight:bold;letter-spacing:4px;font-size:clamp(20px,5vw,30px)">READ. COUNT. SHINE.</div>
+<div class="float">🕵️ 📝 📚 🧩</div>
+<button class="btn enter" id="enterBtn">ENTER APP →</button>
+</div>
+<header><div class="header-inner">
+<div class="logo" style="cursor:pointer" onclick="openPage('home')" title="Home"><div class="logo-icon">✦</div><div><h1>LUMINARIA</h1><small>READ. COUNT. SHINE.</small></div></div>
+<div class="points">⭐ <span id="points">0</span> XP</div>
+</div></header>
+
+<main>
+<section id="home" class="page active">
+<div class="hero">
+<h2>🌟 Welcome to Luminaria</h2>
+<p class="tagline">READ. COUNT. SHINE.</p>
+</div>
+<h2 class="section-title">Choose Your Learning Mission</h2>
+<div class="cards">
+<div class="card" tabindex="0" onclick="openPage('detective')"><div class="card-icon">🕵️</div><h3>Word Problem Detective</h3><p>25 story problems. Understand the story before choosing an operation.</p></div>
+<div class="card" tabindex="0" onclick="openPage('rma')"><div class="card-icon">📝</div><h3>RMA Practice</h3><p>25 junior high questions: patterns, algebra, data, geometry, and more.</p></div>
+<div class="card" tabindex="0" onclick="openPage('philiri')"><div class="card-icon">📚</div><h3>Phil-IRI Practice</h3><p>20 reading passages with multiple-choice questions: 10 in English and 10 in Filipino.</p></div>
+<div class="card" tabindex="0" onclick="openPage('litnum')"><div class="card-icon">🧩</div><h3>LitNum Intervention</h3><p>Step-by-step Literacy and Numeracy activities for learners who need extra support.</p></div>
+</div>
+</section>
+
+<section id="detective" class="page">
+<div class="module-header"><h2>🕵️ Word Problem Detective</h2><p>Don't rush! Understand the problem before solving it.</p></div>
+<div class="nav"><button onclick="openPage('home')">🏠 Home</button></div>
+<div class="problem-box"><div id="detBox"></div></div>
+</section>
+
+<section id="rma" class="page">
+<div class="module-header"><h2>📝 RMA Practice</h2><p>25 assessment-style questions modeled on the Rapid Mathematics Assessment for Grades 7 to 10.</p></div>
+<div class="nav"><button onclick="openPage('home')">🏠 Home</button></div>
+<div class="problem-box"><div id="rmaBox"></div></div>
+</section>
+
+
+<section id="philiri" class="page">
+<div class="module-header"><h2>📚 Phil-IRI Practice</h2><p id="philSub">Read the passage carefully, then answer the questions. Choose your language.</p></div>
+<div class="nav"><button onclick="openPage('home')">🏠 Home</button><button onclick="philHome()">🌐 Language</button><button id="philNavList" class="hidden" onclick="philList(philLang)">📋 Passages</button></div>
+<div id="philLangBox" class="cards"></div>
+<div id="philListBox" class="hidden"></div>
+<div id="philBody" class="problem-box hidden"></div>
+</section>
+
+<section id="litnum" class="page">
+<div class="module-header"><h2>🧩 LitNum Intervention</h2><p>Short, friendly activities for learners who need extra support. Picture clues, read-aloud, hints, and unlimited tries.</p></div>
+<div class="nav"><button onclick="openPage('home')">🏠 Home</button><button onclick="lnHome()">🔀 Literacy / Numeracy</button><button id="lnNavBack" class="hidden" onclick="lnList(lnKind)">📋 Activities</button></div>
+<div id="lnTop" class="cards" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"></div>
+<div id="lnList" class="hidden"></div>
+<div id="lnBody" class="problem-box hidden"></div>
+</section>
+</main>
+<footer><strong>LUMINARIA</strong><br>READ. COUNT. SHINE.</footer>
+
+<script>
+
+const $=id=>document.getElementById(id);
+let xp=0,seed=Date.now()%233280;
+const addXP=n=>{xp+=n;$('points').textContent=xp};
+const rnd=(a,b)=>{seed=(seed*9301+49297)%233280;return a+Math.floor(seed/233280*(b-a+1))};
+const pick=a=>a[rnd(0,a.length-1)];
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const OBJ=[['🍎','apples'],['🥭','mangoes'],['✏️','pencils'],['🍬','candies'],['⚽','balls'],['🍪','cookies'],['🐟','fish'],['🌸','flowers']];
+const NAMES=['Maria','Ben','Ana','Jose','Liza','Mark','Rina','Paolo'];
+const PRAISE=['Excellent!','Great job!','Correct!','Awesome!','Well done!','Super!'];
+const pics=(e,n,cap=20)=>'<span class="em">'+e.repeat(Math.min(n,cap))+'</span>'+(n>cap?' <b>×'+n+'</b>':'');
+const groups=(a,b,e)=>Array(a).fill('<span class="grp">'+e.repeat(b)+'</span>').join('');
+function opts(ans,extra=[],n=4,sm=0){const base=sm?[ans+1,ans-1,ans+2,ans-2]:[ans+1,ans-1,ans+2,ans-2,ans+10,ans-10];
+ const c=shuf([...base,...extra]).filter((v,i,a)=>v>=0&&v!==ans&&a.indexOf(v)===i).slice(0,n-1);return shuf([ans,...c])}
+function build(gen,n=25){const s=new Set(),o=[];for(let t=0;o.length<n&&t<4000;t++){const q=gen(o.length);if(!s.has(q.key)){s.add(q.key);o.push(q)}}return o}
+const UI={en:{q:'Question',of:'of',read:'🔊 Read aloud',hint:'💡 Hint',next:'NEXT QUESTION →',fin:'FINISH ✔',bad:'💡 <b>Not quite.</b> The answer is',hl:'💡 <b>Hint:</b> ',hd:'Read the question again.',check:'CHECK',type:'Type your answer',hi:['Excellent work!','Good job!','Keep practicing!'],res:(s,n)=>`You answered <b>${s}</b> out of <b>${n}</b> correctly.`,again:'🔁 Try Again',praise:PRAISE},
+fil:{q:'Tanong',of:'sa',read:'🔊 Basahin',hint:'💡 Pahiwatig',next:'SUSUNOD →',fin:'TAPUSIN ✔',bad:'💡 <b>Hindi pa tama.</b> Ang tamang sagot ay',hl:'💡 <b>Pahiwatig:</b> ',hd:'Basahin muli ang teksto at hanapin ang sagot.',check:'SURIIN',type:'I-type ang sagot',hi:['Napakahusay!','Magaling!','Magsanay pa tayo!'],res:(s,n)=>`Nakakuha ka ng <b>${s}</b> sa <b>${n}</b> na tamang sagot.`,again:'🔁 Ulitin',praise:['Tama!','Mahusay!','Magaling!','Napakagaling!']}};
+function say(t,l){try{if(window.LuminariaTTS){window.LuminariaTTS.speak(t.replace(/<[^>]+>/g,' ').replace(/−/g,'minus').replace(/×/g,'times').replace(/÷/g,'divided by'),l||'en');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/<[^>]+>/g,' ').replace(/−/g,'minus').replace(/×/g,'times').replace(/÷/g,'divided by'));if(l==='fil')u.lang='fil-PH';speechSynthesis.speak(u)}catch(e){}}
+function endHTML(box,score,n,again,o={}){const r=score/n,U=UI[o.lang||'en'];
+ box.innerHTML=`<div class="end"><div class="big">${r>=.8?'🏆':r>=.5?'🌟':'💪'}</div><h2>${r>=.8?U.hi[0]:r>=.5?U.hi[1]:U.hi[2]}</h2><p style="margin:10px 0">${U.res(score,n)}</p><button class="btn btn-primary" id="again">${U.again}</button>${o.back?`<button class="btn btn-secondary" id="backBtn">${o.backLabel||'⬅ Back'}</button>`:''}</div>`;
+ $('again').onclick=again;if(o.back)$('backBtn').onclick=o.back}
+
+/* ---------- generic quiz (choices or typed answer) ---------- */
+function quiz(id,qs,o={}){
+ const box=$(id);let i=0,score=0,done=false;const per=o.xp||10,U=UI[o.lang||'en'];
+ function show(){
+  if(i>=qs.length)return endHTML(box,score,qs.length,o.again,o);
+  const q=qs[i];done=false;
+  box.innerHTML=`<div class="qhead"><span>${o.title?o.title+' · ':''}${U.q} ${i+1} ${U.of} ${qs.length}</span><span>⭐ ${score}</span></div>
+  <div class="progress-wrap"><div class="progress-bar" style="width:${i/qs.length*100}%"></div></div>
+  <div class="pic">${q.pic||''}</div><div class="problem">${q.text}</div>
+  <div><button class="btn btn-light" id="spk">${U.read}</button><button class="btn btn-secondary" id="hnt">${U.hint}</button></div>
+  ${q.choices?`<div class="option-grid">${q.choices.map((c,x)=>`<div class="option${q.big?' big':''}" tabindex="0" data-i="${x}">${esc(c)}</div>`).join('')}</div>`
+  :`<br><input type="number" id="ans" placeholder="${U.type}"><br><br><button class="btn btn-primary" id="chk">${U.check}</button>`}
+  <div class="feedback" id="fb"></div><br>
+  <button class="btn btn-primary" id="nx" disabled>${i==qs.length-1?U.fin:U.next}</button>`;
+  const fb=$('fb');
+  const fin=ok=>{if(done)return;done=true;if(ok){score++;addXP(per)}
+   fb.className='feedback show '+(ok?'success':'error');
+   fb.innerHTML=(ok?'🎉 <b>'+pick(U.praise)+'</b><br>':U.bad+' <b>'+esc(q.answer)+'</b>.<br>')+(q.exp||'');$('nx').disabled=false};
+  $('spk').onclick=()=>say((q.say||q.text)+(q.choices?'. '+q.choices.join(', '):''),o.lang);
+  $('hnt').onclick=()=>{if(done)return;fb.className='feedback info show';fb.innerHTML=U.hl+(q.hint||U.hd)};
+  if(q.choices)box.querySelectorAll('.option').forEach(el=>{const f=()=>{if(done)return;const v=q.choices[el.dataset.i],ok=String(v)===String(q.answer);
+    el.classList.add(ok?'good':'bad');if(!ok)box.querySelectorAll('.option').forEach(x=>{if(String(q.choices[x.dataset.i])===String(q.answer))x.classList.add('good')});fin(ok)};
+    el.onclick=f;el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}}});
+  else{const chk=()=>{const v=$('ans').value;if(v==='')return;fin(Number(v)===q.answer)};$('chk').onclick=chk;$('ans').onkeydown=e=>{if(e.key==='Enter')chk()}}
+  $('nx').onclick=()=>{i++;show();box.scrollIntoView({behavior:'smooth',block:'start'})};
+ }
+ show();
+}
+
+/* ---------- navigation ---------- */
+function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$(p).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});try{speechSynthesis.cancel()}catch(e){}}
+function openPage(p){showPage(p);if(p==='rma')startRMA();if(p==='detective')startDet();if(p==='philiri')philHome();if(p==='litnum')lnHome()}
+
+/* ---------- RMA: 25 parallel questions ---------- */
+const tbl=(h,rows)=>`<table style="margin:auto;border-collapse:collapse;font-size:16px"><tr>${h.map(x=>`<th style="border:1px solid var(--bd);padding:6px 12px;background:var(--soft)">${x}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(x=>`<td style="border:1px solid var(--bd);padding:6px 12px">${x}</td>`).join('')}</tr>`).join('')}</table>`;
+const plane=(P,L=[])=>{const s=30,X=x=>(x+3)*s+10,Y=y=>(6-y)*s+10;let g='';
+ for(let x=-3;x<=6;x++)g+=`<line x1="${X(x)}" y1="${Y(6)}" x2="${X(x)}" y2="${Y(-2)}" stroke="currentColor" opacity=".15"/>`;
+ for(let y=-2;y<=6;y++)g+=`<line x1="${X(-3)}" y1="${Y(y)}" x2="${X(6)}" y2="${Y(y)}" stroke="currentColor" opacity=".15"/>`;
+ g+=`<line x1="${X(-3)}" y1="${Y(0)}" x2="${X(6)}" y2="${Y(0)}" stroke="currentColor"/><line x1="${X(0)}" y1="${Y(6)}" x2="${X(0)}" y2="${Y(-2)}" stroke="currentColor"/>`;
+ L.forEach(([a,b])=>g+=`<line x1="${X(a[0])}" y1="${Y(a[1])}" x2="${X(b[0])}" y2="${Y(b[1])}" stroke="#7c3aed" stroke-width="3"/>`);
+ P.forEach(([n,x,y])=>g+=`<circle cx="${X(x)}" cy="${Y(y)}" r="5" fill="#dc2626"/><text x="${X(x)+7}" y="${Y(y)-7}" font-size="13" fill="currentColor">${n}(${x},${y})</text>`);
+ return`<svg viewBox="0 0 290 260" style="max-width:320px;width:100%;color:var(--tx)">${g}</svg>`};
+const numline=()=>{let g='<line x1="10" y1="50" x2="280" y2="50" stroke="currentColor" stroke-width="2"/>';
+ for(let i=0;i<9;i++)g+=`<circle cx="${25+i*30}" cy="50" r="5" fill="${i==1?'#dc2626':'currentColor'}"/>`;
+ g+=`<text x="${25+5*30-8}" y="78" font-size="15" fill="currentColor">50</text><text x="${25+8*30-12}" y="78" font-size="15" fill="currentColor">200</text><text x="${25+30-5}" y="35" font-size="16" font-weight="bold" fill="#dc2626">P</text>`;
+ return`<svg viewBox="0 0 290 90" style="max-width:340px;width:100%;color:var(--tx)">${g}</svg>`};
+const tri=()=>`<svg viewBox="0 0 270 140" style="max-width:300px;width:100%;color:var(--tx)"><polygon points="20,120 200,120 120,20" fill="none" stroke="#7c3aed" stroke-width="3"/><line x1="200" y1="120" x2="255" y2="120" stroke="#7c3aed" stroke-width="3"/><g font-size="15" fill="currentColor"><text x="6" y="132">P</text><text x="198" y="136">Q</text><text x="116" y="14">R</text><text x="215" y="108" fill="#dc2626">120°</text><text x="40" y="112">40°</text></g></svg>`;
+const T9=tbl(['Absences','0','1','3','5','7','9'],[['Grade','96','94','90','86','81','78']]);
+const RQ=()=>[
+{pic:tbl(['n=2','n=3','n=4','n=5'],[['2×4 − 3×2','3×5 − 4×3','4×6 − 5×4','5×7 − 6×5']])+'<p style="margin-top:6px">Each expression equals 2, 3, 4, 5.</p>',text:'What is the <b>next</b> number expression in the pattern?',choices:['6×8 − 7×6','6×7 − 7×6','7×9 − 8×7','6×8 − 7×5'],answer:'6×8 − 7×6',hint:'Look at how each number in the expression grows by 1.',exp:'Pattern: n(n+2) − (n+1)(n). For n = 6: 6×8 − 7×6 = 6.'},
+{pic:'<span class="em">2×4 − 3×2 = 2 &nbsp; 3×5 − 4×3 = 3</span>',text:'Which algebraic expression represents the pattern above?',choices:['n(n+2) − (n+1)(n)','n² − (n+1)(n−1)','n(n+1) − (n+2)(n−1)','n² + 2n + n(n+1)'],answer:'n(n+2) − (n+1)(n)',hint:'Test each choice with n = 2. It must give 2×4 − 3×2.',exp:'With n = 2: 2(4) − 3(2) = 2 ✓. n is the first number in the expression.'},
+{pic:'',text:'A classmate says every expression in the pattern equals its first number n. Verify with <b>7 × 9 − 8 × 7</b>. What is the value?',answer:7,hint:'Multiply first, then subtract.',exp:'7×9 = 63 and 8×7 = 56, so 63 − 56 = 7.'},
+{pic:tbl(['2²','2³','2⁴','2⁵'],[['4','8','16','32']]),text:'Which is the exponential form of 512?',choices:['2⁸','2⁹','2¹⁰','2⁷'],answer:'2⁹',hint:'Keep doubling from 32: 64, 128, 256 …',exp:'2⁶=64, 2⁷=128, 2⁸=256, 2⁹=512.'},
+{pic:'',text:'Which number is a power of 2, a multiple of 32, and between 100 and 300?',choices:['64','128','256','512'],answer:'256',hint:'List the powers of 2, then check the conditions.',exp:'256 = 2⁸ = 32 × 8, and 100 < 256 < 300.'},
+{pic:'',text:'Which number is between 0.457 and 0.458?',choices:['0.4575','0.456','0.459','0.4580'],answer:'0.4575',hint:'Add a digit: 0.457 = 0.4570 and 0.458 = 0.4580.',exp:'0.4570 < 0.4575 < 0.4580. There are always more decimals in between.'},
+{pic:'<span class="em big">🚲</span>',text:'A wheel has a diameter of 40 cm. It rolls exactly 5 times in a straight line. How far does it travel? (Use π = 3.14)',choices:['628 cm','125.6 cm','251.2 cm','314 cm'],answer:'628 cm',hint:'One roll = one circumference = π × diameter.',exp:'C = 3.14 × 40 = 125.6 cm. 5 rolls: 125.6 × 5 = 628 cm.'},
+{pic:'',text:'Which fraction is greater than <b>2/3</b> but less than <b>1</b>?',choices:['1/2','3/5','4/3','5/6'],answer:'5/6',hint:'2/3 ≈ 0.67. Change each choice to a decimal.',exp:'5/6 ≈ 0.83, which is between 0.67 and 1.'},
+{pic:T9,text:'Which is a correct interpretation of the data?',choices:['As absences increase, the grade tends to increase.','As absences increase, the grade tends to decrease.','Absences and grades are not related.','Everyone with 5 absences has the same grade.'],answer:'As absences increase, the grade tends to decrease.',hint:'Read the table from left to right. What happens to the grades?',exp:'Grades go down from 96 to 78 as absences go from 0 to 9.'},
+{pic:T9,text:'How many students had a grade <b>below 84</b>?',answer:2,hint:'Check each grade in the table. Is it less than 84?',exp:'Only 81 and 78 are below 84, so 2 students.'},
+{pic:tbl(['','Incomes (₱ thousand)','Average'],[['Purok A','20, 21, 22, 23, 24','22'],['Purok B','8, 15, 20, 27, 40','22']]),text:'Both puroks have the same average income. Which has more <b>diversity</b> in income?',choices:['Purok A, because its incomes are close together','Purok B, because its incomes are more spread out','Both, because the averages are equal','Neither, because the averages are equal'],answer:'Purok B, because its incomes are more spread out',hint:'Diversity means how spread out the values are. Compare lowest and highest.',exp:'Purok B ranges from ₱8k to ₱40k; Purok A only from ₱20k to ₱24k.'},
+{pic:tbl(['','Joined dance','Did not join','Total'],[['Joined art','12','28','40'],['Did not join art','18','22','40'],['Total','30','50','80']]),text:'What is the probability that a randomly chosen student joined <b>both</b> art and dance?',choices:['3/20','12/40','3/10','12/30'],answer:'3/20',hint:'Find the "both" cell, then divide by the grand total.',exp:'12 out of 80 = 12/80 = 3/20.'},
+{pic:numline(),text:'The tick marks are equally spaced. What is the position of point <b>P</b>?',choices:['−200','−150','−100','−250'],answer:'−150',hint:'Find the step between ticks using 50 and 200 (3 steps apart).',exp:'Each step = 50. P is 4 steps left of 50: 50 − 200 = −150.'},
+{pic:plane([['R',1,1],['S',3,5]],[[[1,1],[3,5]]]),text:'A line passes through R and S. Which point is also on this line?',choices:['(2, 4)','(2, 3)','(4, 6)','(0, 1)'],answer:'(2, 3)',hint:'Find the slope from R to S, then move along the line.',exp:'Slope = (5−1)/(3−1) = 2, so y = 2x − 1. At x = 2, y = 3.'},
+{pic:plane([['A',0,2],['B',3,-1]],[[[0,2],[3,-1]]]),text:'Which equation describes all the points on the line through A and B?',choices:['y = −x + 2','y = x + 2','y = −2x + 2','y = −x − 2'],answer:'y = −x + 2',hint:'The y-intercept is where the line crosses the y-axis. Then find the slope.',exp:'y-intercept 2; slope = (−1−2)/(3−0) = −1. So y = −x + 2.'},
+{pic:plane([['A',-2,1],['B',4,1],['C',1,5]],[[[-2,1],[4,1]],[[4,1],[1,5]],[[1,5],[-2,1]]]),text:'What is the <b>area</b> of triangle ABC? (Square units)',choices:['12','24','15','10'],answer:'12',hint:'Base = length of AB. Height = vertical distance from C to line AB.',exp:'Base = 6, height = 4. Area = ½ × 6 × 4 = 12.'},
+{pic:plane([['H',-3,-2],['S',0,2],['B',3,6]],[[[-3,-2],[3,6]]]),text:'H is your house, S is the school, B is the barangay hall. They lie on one straight road. Which is the shorter walk from your house?',choices:['School, 5 units shorter','School, 10 units shorter','Barangay hall, 5 units shorter','They are equal'],answer:'School, 5 units shorter',hint:'Use the distance formula, or a 3-4-5 right triangle.',exp:'H→S: √(3²+4²) = 5. H→B: √(6²+8²) = 10. School is 5 units shorter.'},
+{pic:'',text:'If <b>r</b> is an integer, which value can be represented by <b>3r + 1</b>?',choices:['25','26','27','30'],answer:'25',hint:'Subtract 1, then check if the result divides evenly by 3.',exp:'25 − 1 = 24 = 3 × 8, so r = 8.'},
+{pic:'<span class="em big">🥭🥭🥭🥭 = ₱120</span>',text:'Mangoes cost 4 for ₱120. Which expression gives the cost of <b>n</b> mangoes?',choices:['120n','120 ÷ 4','4n ÷ 120','(120n) ÷ 4'],answer:'(120n) ÷ 4',hint:'Unit price = 120 ÷ 4. Multiply by n.',exp:'Each mango is ₱30, so cost = 30n = (120n)/4.'},
+{pic:'<span class="em big">25 + a = b + 7</span>',text:'Which statement is <b>always true</b> about a and b?',choices:['a is greater than b','a + b = 18','b − a = 18','a = b'],answer:'b − a = 18',hint:'Move a to one side and 7 to the other.',exp:'25 − 7 = b − a, so b − a = 18.'},
+{pic:'<span class="em">7x − 5 = 2x + 20<br>7x − 2x − 5 = 20</span>',text:'What reason transforms the first equation into the second?',choices:['Subtract 2x from both sides','Add 2x to both sides','Subtract 5 from both sides','Divide both sides by 7'],answer:'Subtract 2x from both sides',hint:'What happened to the 2x on the right side?',exp:'Subtracting 2x from both sides keeps the equation true and removes 2x on the right.'},
+{pic:'<span class="em big">🛺</span>',text:'A tricycle rental follows <b>c = 150 + 80d</b> (c in pesos, d in days). How much does it cost to rent for 6 days?',answer:630,hint:'Replace d with 6.',exp:'c = 150 + 80(6) = 150 + 480 = 630. (150 is the fixed fee; 80 is the slope, the cost per day.)'},
+{pic:'<span class="em big">🐕🏠</span>',text:'A triangular dog house has sides in the ratio 4:4:3. Its shortest side is 60 cm. What are the other two sides?',choices:['80 cm each','60 cm and 80 cm','120 cm each','45 cm each'],answer:'80 cm each',hint:'3 parts = 60 cm, so 1 part = 20 cm.',exp:'1 part = 20 cm. The other sides are 4 × 20 = 80 cm each.'},
+{pic:'<span class="em big">🏊</span>',text:'A circular pool has a diameter of 8 m. A sidewalk 1 m wide surrounds it. What is the area of the sidewalk? (Use π = 3.14)',choices:['28.26 m²','50.24 m²','78.5 m²','25.12 m²'],answer:'28.26 m²',hint:'Area of the big circle (radius 5) minus the pool (radius 4).',exp:'3.14 × 5² − 3.14 × 4² = 78.5 − 50.24 = 28.26 m².'},
+{pic:tri(),text:'In triangle PQR, angle P = 40° and the exterior angle at Q is 120°. What are the values of q and r?',choices:['q = 60, r = 80','q = 80, r = 60','q = 120, r = 20','q = 50, r = 90'],answer:'q = 60, r = 80',hint:'The exterior angle and q form a straight line (180°).',exp:'q = 180 − 120 = 60. Then r = 180 − 40 − 60 = 80 (also 120 = 40 + 80).'}];
+function startRMA(){const run=()=>quiz('rmaBox',RQ().map(q=>q.choices?{...q,choices:shuf(q.choices)}:q),{xp:15,again:run,title:'RMA'});run()}
+
+/* ---------- WORD PROBLEM DETECTIVE: 25 problems ---------- */
+const ACT=['Something was added','Something was taken away','Things were put in equal groups','Things were shared equally'];
+const OPN=['Addition','Subtraction','Multiplication','Division'],SYM=['+','−','×','÷'];
+const DG=[
+i=>{const[e,o]=pick(OBJ),n=pick(NAMES),a=rnd(10,60),b=rnd(5,40);return{k:0,a,b,ans:a+b,key:'0'+a+b,pic:pics(e,a,12)+' <b class="em">➕</b> '+pics(e,b,12),text:`${n} has ${a} ${o}. ${n} receives ${b} more ${o}. How many ${o} does ${n} have altogether?`,ask:`Total number of ${o}`}},
+i=>{const[e,o]=pick(OBJ),n=pick(NAMES),a=rnd(20,80),b=rnd(5,a-5);return{k:1,a,b,ans:a-b,key:'1'+a+b,pic:pics(e,a,20),text:`${n} has ${a} ${o}. ${n} gives ${b} to a friend. How many ${o} are left?`,ask:`Number of ${o} left`}},
+i=>{const[e,o]=pick(OBJ),a=rnd(2,9),b=rnd(2,9);return{k:2,a,b,ans:a*b,key:'2'+a+b+o,pic:groups(a,b,e),text:`There are ${a} boxes. Each box has ${b} ${o}. How many ${o} are there in all?`,ask:`Total number of ${o}`}},
+i=>{const[e,o]=pick(OBJ),n=pick(NAMES),b=rnd(2,9),q=rnd(2,9),a=b*q;return{k:3,a,b,ans:q,key:'3'+a+b+o,pic:pics(e,a,24)+'<br><span class="em">'+'🧒'.repeat(b)+'</span>',text:`${n} shares ${a} ${o} equally among ${b} children. How many ${o} does each child get?`,ask:`Number of ${o} each child gets`}}];
+function startDet(){
+ const kinds=shuf([0,0,0,0,0,0,0,1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,3,3,3]);
+ const ps=build(i=>DG[kinds[i]](i));let i=0,score=0;const box=$('detBox');
+ function show(){
+  if(i>=ps.length)return endHTML(box,score,ps.length,startDet);
+  const p=ps[i],pool=['The number of teachers','The number of classrooms','The color of the objects','The name of the school'];
+  const steps=[['STEP 1 — What do we know?',`${p.a} and ${p.b}`,[`${p.a} and ${p.a+p.b}`,`${p.b} and ${p.a+2}`]],
+   ['STEP 2 — What do we need to find?',p.ask,shuf(pool).slice(0,2)],
+   ['STEP 3 — What happened in the story?',ACT[p.k],ACT.filter((_,x)=>x!=p.k)],
+   ['STEP 4 — Which operation should we use?',OPN[p.k],OPN.filter((_,x)=>x!=p.k)]];
+  let tries=0,done=false;
+  box.innerHTML=`<div class="qhead"><span>Problem ${i+1} of ${ps.length}</span><span>⭐ ${score}</span></div>
+  <div class="progress-wrap"><div class="progress-bar" style="width:${i/ps.length*100}%"></div></div>
+  <div class="problem">${p.text}</div><button class="btn btn-light" id="spk">🔊 Read aloud</button>
+  ${steps.map((s,x)=>`<div class="step${x?' hidden':''}" id="st${x}" data-x="${x}"><label>${s[0]}</label><div class="option-grid">${shuf([s[1],...s[2]]).map(t=>`<div class="option" tabindex="0" data-ok="${t===s[1]?1:0}">${t}</div>`).join('')}</div></div>`).join('')}
+  <div class="step hidden" id="st4"><label>STEP 5 — Solve the problem.</label><input type="number" id="dAns" placeholder="Type your answer"><br><br>
+  <button class="btn btn-primary" id="chk">CHECK MY THINKING</button><button class="btn btn-secondary" id="hnt">💡 GIVE ME A HINT</button></div>
+  <div class="feedback" id="fb"></div><br><button class="btn btn-primary" id="nx" disabled>${i==ps.length-1?'FINISH ✔':'NEXT PROBLEM →'}</button>`;
+  const fb=$('fb');
+  $('spk').onclick=()=>say(p.text);
+  box.querySelectorAll('.step .option').forEach(el=>{const f=()=>{const x=+el.closest('.step').dataset.x;
+   if(el.dataset.ok==='1'){el.classList.add('good');el.parentElement.querySelectorAll('.option').forEach(y=>y.classList.add('locked'));fb.className='feedback';$('st'+(x+1)).classList.remove('hidden')}
+   else{el.classList.add('bad');fb.className='feedback error show';fb.innerHTML='🔎 <b>Not quite.</b> Read the story again and try another choice.'}};
+   el.onclick=f;el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}}});
+  $('hnt').onclick=()=>{fb.className='feedback info show';fb.innerHTML=`💡 <b>Hint:</b> The story is about "${ACT[p.k].toLowerCase()}". Try <b>${p.a} ${SYM[p.k]} ${p.b}</b>.`};
+  const chk=()=>{const v=$('dAns').value;if(v==='')return;tries++;
+   if(Number(v)===p.ans){if(!done&&tries===1){score++;addXP(25)}done=true;fb.className='feedback success show';fb.innerHTML=`🏆 <b>Great detective work!</b><br>${p.a} ${SYM[p.k]} ${p.b} = <b>${p.ans}</b>.<br>You didn't just calculate. You understood what happened in the story.`;$('nx').disabled=false}
+   else{fb.className='feedback error show';fb.innerHTML=`🔎 <b>Let's investigate again.</b><br>The story is about "${ACT[p.k].toLowerCase()}". Try: <b>${p.a} ${SYM[p.k]} ${p.b}</b>`;$('nx').disabled=false}};
+  $('chk').onclick=chk;$('dAns').onkeydown=e=>{if(e.key==='Enter')chk()};
+  $('nx').onclick=()=>{i++;show();box.scrollIntoView({behavior:'smooth',block:'start'})};
+ }
+ show();
+}
+
+/* ---------- PHIL-IRI READY: passage data ----------
+   [grade, title, passage, [[question, correct, wrong1, wrong2, wrong3], ...], verse?] */
+const PI={
+en:[
+[3,`Nena's Sari-Sari Store`,`Nena has a small sari-sari store in front of her house. She opens it every morning at six o'clock. She sells rice, eggs, candies, and soap. Many neighbors buy from her because she is kind and honest. When a child has no coins, Nena lets him pay tomorrow. In the afternoon, she counts her money and writes in her notebook. She saves a little every day so she can send her son to school.`,[
+[`What does Nena sell?`,`Rice, eggs, candies, and soap`,`Shoes, bags, and toys`,`Fruits and fish`,`Books and pencils`],
+[`What time does Nena open her store?`,`Six o'clock`,`Seven o'clock`,`Noon`,`Five o'clock`],
+[`Why do many neighbors buy from Nena?`,`She is kind and honest.`,`She sells things for free.`,`Her store is very big.`,`She has a television.`],
+[`What does Nena do when a child has no coins?`,`She lets him pay tomorrow.`,`She sends him away.`,`She gives him a toy.`,`She closes the store.`],
+[`Why does Nena save money every day?`,`To send her son to school`,`To buy a new house`,`To travel abroad`,`To buy a car`],
+[`Which word best describes Nena?`,`Caring`,`Lazy`,`Angry`,`Careless`]]],
+[4,`The Philippine Tarsier`,`The Philippine tarsier is one of the smallest primates in the world. It is only about as big as a grown man's fist. It has huge round eyes that help it see in the dark because it hunts at night. During the day, it sleeps on tree branches. The tarsier eats insects such as grasshoppers and beetles. It lives in the forests of Bohol and a few other islands. Because people are cutting down trees, the number of tarsiers is getting smaller. Visitors to the sanctuary are asked to be quiet and not to use flash cameras.`,[
+[`How big is the Philippine tarsier?`,`About as big as a grown man's fist`,`As big as a cat`,`As big as a dog`,`As big as a rooster`],
+[`Why does the tarsier have huge eyes?`,`To see in the dark`,`To look pretty`,`To scare its enemies`,`To read at night`],
+[`What does the tarsier eat?`,`Insects`,`Fruits`,`Fish`,`Rice`],
+[`Why is the number of tarsiers getting smaller?`,`People are cutting down trees.`,`They fly away.`,`They eat too much.`,`The weather is too cold.`],
+[`Why are visitors told not to use flash cameras?`,`The bright light can disturb the tarsier.`,`Cameras are too expensive.`,`It makes the forest dark.`,`Tarsiers do not like pictures of trees.`],
+[`Which is the best title for the selection?`,`The Small Night Hunter of Bohol`,`How to Cook Insects`,`A Trip to the Beach`,`The Biggest Animal`]]],
+[5,`Saving Water at Home`,`Water is important, yet many families waste it without noticing. A leaking faucet can waste up to 20 liters in one day. Leaving the tap open while brushing teeth wastes even more. There are simple ways to save water. First, fix leaks right away. Second, close the tap while soaping the dishes. Third, collect rainwater in a drum and use it to water plants. If everyone in the community does these small actions, there will be enough clean water for everyone, even during the summer months.`,[
+[`How much water can a leaking faucet waste in one day?`,`Up to 20 liters`,`Only 2 liters`,`Up to 200 liters`,`Up to 2,000 liters`],
+[`Which is NOT a way to save water mentioned in the selection?`,`Taking a long shower`,`Fixing leaks right away`,`Closing the tap while soaping dishes`,`Collecting rainwater`],
+[`What can collected rainwater be used for?`,`Watering plants`,`Drinking`,`Cooking rice`,`Taking a bath`],
+[`In the selection, what does the word "waste" mean?`,`Use carelessly`,`Clean`,`Buy`,`Save`],
+[`What will happen if everyone does these small actions?`,`There will be enough clean water for everyone.`,`The rain will stop.`,`Water will become free.`,`All faucets will disappear.`],
+[`What is the author's purpose?`,`To encourage readers to save water`,`To sell faucets`,`To tell a funny story`,`To describe a river`]]],
+[5,`The Banaue Rice Terraces`,`The Banaue Rice Terraces are in Ifugao, in the northern part of the Philippines. They were carved into the mountains by the Ifugao people more than 2,000 years ago, using simple tools and their bare hands. The terraces look like giant steps going up the mountainside. Water from the forests above flows down through bamboo pipes to each level. Today, the rice terraces are a World Heritage Site. However, fewer young people want to farm them because the work is hard. Without farmers to repair the walls, the terraces may slowly crumble.`,[
+[`Where are the Banaue Rice Terraces?`,`Ifugao`,`Palawan`,`Albay`,`Bohol`],
+[`Who carved the terraces into the mountains?`,`The Ifugao people`,`Spanish builders`,`Tourists`,`Machines`],
+[`How does water reach each level of the terraces?`,`Through bamboo pipes`,`By trucks`,`By buckets from the sea`,`By airplanes`],
+[`Why may the terraces slowly crumble?`,`Few people are willing to farm and repair them.`,`There are too many tourists.`,`Rice is too heavy.`,`Earthquakes happen every day.`],
+[`What does "World Heritage Site" suggest about the terraces?`,`They are important and must be protected.`,`They are for sale.`,`They are brand new.`,`They are found in a city.`],
+[`What can you conclude about the Ifugao people?`,`They were hardworking and skillful.`,`They were afraid of mountains.`,`They disliked rice.`,`They were lazy.`]]],
+[6,`Why We Should Read Every Day`,`Reading is like exercise for the mind. When you read every day, you learn new words and see how sentences are built. Studies show that learners who read for just twenty minutes a day often do better in school. Reading also takes you to places you may never visit. One day you may travel to a faraway planet, and the next you may walk through an old Philippine village. Some people say they have no time to read. But reading while waiting for a ride or before bedtime is enough to form the habit. Like a muscle, the mind grows stronger the more it is used.`,[
+[`What is reading compared to in the first sentence?`,`Exercise`,`Cooking`,`Sleeping`,`Shopping`],
+[`How many minutes of daily reading may help learners do better in school?`,`Twenty minutes`,`Five minutes`,`Sixty minutes`,`Two hours`],
+[`Which is NOT a benefit of reading mentioned in the selection?`,`Earning money right away`,`Learning new words`,`Visiting places in your imagination`,`Making the mind stronger`],
+[`What does "form the habit" mean?`,`Start doing something regularly`,`Make a shape`,`Stop doing something`,`Forget something`],
+[`What is the main idea of the selection?`,`Reading every day is good for the mind.`,`Reading is difficult.`,`Books are expensive.`,`Exercise is boring.`],
+[`Why does the author say "the mind grows stronger the more it is used"?`,`To show that practice improves ability`,`To say that muscles are weak`,`To discourage reading`,`To compare sports and games`]]],
+[6,`Dreams`,`We often say "Sweet dreams," but have you ever wondered why we dream? Some say that dreaming is our brain's way of exercising. While we sleep, our brain may be testing the connections and pathways to see if they are working well. Others believe that dreaming is our brain's way of sorting out problems. Problems that have not been addressed during the day are sometimes resolved in our sleep. Yet another explanation is that dreaming is our brain's way of fixing and organizing all the information we have. While sleeping, our brains have a chance to sort out the information that we want to keep from the stuff we no longer want. Still another idea is that dreams are just another form of thinking. Will we ever get to know the answer to this question? Maybe we should sleep on it.\n\nAdapted from science.howstuffworks.com and learnenglish.britishcouncil.org. (Phil-IRI sample, Grade 6)`,[
+[`Based on the selection, what does our brain exercise through sleeping?`,`The connections and pathways`,`The left and right hemispheres`,`The content and concepts`,`The gray matter`],
+[`Which of the statements does NOT show how dreams fix our problems?`,`As we dream, we constantly think about what we have learned or experienced.`,`Our dreams help us focus on things we are unable to notice during the day.`,`Our brain comes up with solutions in our sleep.`,`Our brain sorts and files information.`],
+[`How does a brain, through dreams, perform the function of an office clerk?`,`It sorts information we need from what we don't.`,`It files what we know into fixed categories.`,`It clears the board to store new information.`,`It functions alone.`],
+[`Based on how it is used in the selection, which word is a synonym for "resolved"?`,`Fixed`,`Accommodated`,`Reflected`,`Decided`],
+[`Which of the following statements is NOT true about the brain?`,`Sleeping is our brain's way of shutting down.`,`Our brain makes connections.`,`Our brain never stops thinking.`,`Our brain replays our experiences as we sleep.`],
+[`Which question is the selection trying to answer?`,`Why do we dream?`,`What are the types of dreams?`,`Are all dreams sweet?`,`How can we stop from dreaming?`],
+[`In the selection, what does it mean to "sleep on it"?`,`Think about it`,`Ignore it`,`Take a nap`,`Forget about it`],
+[`Which could be a good title for this selection?`,`Dreaming: Explained`,`Preventing Our Dreams`,`Interpreting One's Dream`,`Finding Solutions to Dreaming`]]],
+[7,`The Plastic Problem`,`Every year, millions of tons of plastic end up in the ocean. Plastic bags, bottles, and straws float on the water and are mistaken by turtles and seabirds for food. Many of these animals become sick or die. Plastic does not rot like leaves; it only breaks into tiny pieces that stay in the water for hundreds of years. Scientists have even found these pieces in fish that people eat. Some communities have started using cloth bags, refillable bottles, and bamboo straws. Although these changes seem small, they show that every person can help solve the problem.`,[
+[`Why do turtles and seabirds eat plastic?`,`They mistake it for food.`,`They like its taste.`,`They were trained to.`,`They collect it for their nests.`],
+[`How is plastic different from leaves?`,`It does not rot but breaks into tiny pieces.`,`It melts in water.`,`It grows bigger over time.`,`It disappears in a few days.`],
+[`What can be inferred from the plastic pieces found in fish?`,`Plastic pollution can eventually affect people.`,`Fish like to eat plastic.`,`Fish are cheaper because of plastic.`,`The oceans are clean.`],
+[`Which is an example of a solution mentioned in the selection?`,`Using refillable bottles`,`Burning plastic`,`Throwing plastic in rivers`,`Buying more straws`],
+[`What does the author want readers to realize in the last sentence?`,`Small actions of many people matter.`,`Only the government can help.`,`Small changes are useless.`,`Plastic is very useful.`],
+[`What is the tone of the selection?`,`Concerned but hopeful`,`Angry and hateful`,`Funny and playful`,`Bored and careless`]]],
+[7,`Juan's Big Decision`,`Juan was the best player on his school's basketball team. The championship game was on Saturday, the same day as his grandmother's eightieth birthday party. All week, Juan could not sleep. He knew his teammates needed him, but his Lola had raised him since he was a baby. On Friday night, he told his coach the truth. Coach Ramon was disappointed, but he nodded and said, "Family first." On Saturday morning, Juan sang to his Lola, who cried happily. That afternoon, he received a text: his team had won by two points, and his teammates had dedicated the victory to him.`,[
+[`What problem did Juan face?`,`The game and the party were on the same day.`,`He lost his shoes.`,`He was sick.`,`He had no team.`],
+[`Why could Juan not sleep all week?`,`He was worried about choosing between two important things.`,`He was hungry.`,`His neighbors were noisy.`,`He was excited about a movie.`],
+[`What does Coach Ramon's "Family first" show?`,`He understood Juan's decision.`,`He was very angry.`,`He wanted Juan to quit.`,`He did not care about the game.`],
+[`Which word best describes Juan?`,`Loving and responsible`,`Selfish`,`Careless`,`Boastful`],
+[`What happened at the end of the story?`,`The team won and dedicated the victory to Juan.`,`The team lost the game.`,`Juan joined the game late.`,`The party was cancelled.`],
+[`What lesson can be learned from the story?`,`Loved ones matter more than winning.`,`Winning is everything.`,`Never listen to coaches.`,`Games are not important.`]]],
+[7,`Lili the Lizard and Koko the Gecko`,`[1] In a land across the green field, far away from the barracks of the Spanish soldiers, there lived a young couple who owned a gecko. His name was Koko whose vibrant color and smooth scales made him the most adorable pet in the house. His well-decorated cage and abundant food proved that he was well taken care of.\n[2] In one corner of the house was Lili the lizard who was silently waiting for a chance to eat. While Koko devoured the sumptuous food in his cage, Lili silently worked hard to make both ends meet.\n[3] Though they lived in the same house, one was clearly above the other. A wall of discrimination and unequal opportunity was indestructible.\n[4] Every day, Koko the gecko's state of living reminded Lili the lizard of the life she wished she could have. A life of great comfort and abundance. However, no matter how Lili wished to be in the state of life where Koko was, a strange feeling told her that something was wrong.\n[5] One day, as soon as the sun smiled over the green horizon, Koko the gecko was seen being taken out of the cage. It may be another lucky day for him or otherwise. However, Lili the lizard was on her usual daily routine. Nothing new, nothing special.\n[6] When darkness started to clothe the town, the silence that came with it filled the entire house as well. No sound of a gecko was heard. No vibrant color was seen. Only an empty cage.\n[7] The couple seemed to be in a happy disposition while looking at a large amount of money on the table near the cage. Lili the lizard watched the entire situation and couldn't help but wonder. "Is it the price that Koko has to pay?" she asked herself.\n[8] The following day, when a new gecko was seen in the cage, everything made sense to Lili and she learned one lesson she will never forget.\n[9] "One may be living in comfort inside a cage but nothing is more comforting than having the freedom you deserve. Freedom from bondage and suppression." Lili the lizard told her children.\n\nWritten by Jovie R. Cruz · 364 words (Phil-IRI sample, Grade 7)`,[
+[`Which of the following best describes the time setting of the story?`,`The story took place while the Spaniards were in the Philippines.`,`The story took place after the Spaniards left the Philippines.`,`The story took place before the Spaniards came to the Philippines.`,`The story took place when the Spaniards fought the Americans.`],
+[`In paragraph 2, what does the word "devoured" mean?`,`Ate up the food`,`Boasted about the food`,`Divided the food`,`Fought over the food`],
+[`What is the conflict in the story?`,`Lili was envious of Koko.`,`Koko was in a cage.`,`Lili was not beautiful.`,`The couple was poor.`],
+[`What does the "green horizon" in paragraph 5 refer to?`,`Farm`,`Desert`,`Lake`,`Sea`],
+[`Which paragraph shows the difference in the life between Lili and Koko?`,`Paragraph 2`,`Paragraph 5`,`Paragraph 7`,`Paragraph 9`],
+[`What time of the day is indicated in the line "the sun smiled over the green horizon" in paragraph 5?`,`Dawn`,`Morning`,`Night`,`Noon`],
+[`In paragraph 2, what does the idiomatic expression "make both ends meet" mean?`,`To spend according to one's needs`,`To spend according to one's budget`,`To spend according to one's limit`,`To spend according to one's wants`],
+[`Which of the following is an example of a figure of speech?`,`The sun smiled over the green horizon.`,`A wall of discrimination was indestructible.`,`He lived a life of great comfort and abundance.`,`His vibrant color made him the most adorable pet.`],
+[`Which are themes explored in the selection?`,`Equality, freedom, contentment`,`Beauty, freedom, happiness`,`Corruption, equality, contentment`,`Poverty, equality, happiness`],
+[`Which type of text is similar to the selection?`,`Fable, because it highlights the lesson.`,`Fairy tale, because it has a happy ending.`,`Legend, because it tells the origin of something.`,`Tall tale, because the story is exaggerated.`]]],
+[7,`The Bamboo and the Storm`,`In a forest by the river, a proud oak tree laughed at the bamboo beside it. "Look at you," said the oak. "You are thin and you bend with every little wind. I am tall and strong, and I never bow to anyone." The bamboo only smiled and swayed. One night, a mighty storm came. The wind howled and the rain poured. The bamboo bent low to the ground and let the wind pass over it. The oak stood stiff and refused to bend. With a loud crack, it fell. In the morning, the bamboo stood up again, wet but unharmed.`,[
+[`What did the oak say about the bamboo?`,`It was thin and bent with every wind.`,`It was stronger than the oak.`,`It was shorter than a shrub.`,`It was the most beautiful tree.`],
+[`Why did the oak fall?`,`It refused to bend.`,`It was too small.`,`It was very old.`,`There was little rain.`],
+[`In the selection, the wind "howled." What does this mean?`,`It made a loud, long sound.`,`It whispered softly.`,`It stopped moving.`,`It danced happily.`],
+[`Which trait did the oak show at the start of the story?`,`Pride`,`Kindness`,`Fear`,`Shyness`],
+[`What lesson does the story teach?`,`Being flexible can help you survive hard times.`,`Tall trees are always the best.`,`Never smile at others.`,`Storms are good for forests.`],
+[`Which type of text is this?`,`Fable, because plants act like people and teach a lesson`,`Legend, because it explains a place's name`,`News report, because it tells a real event`,`Biography, because it tells about a person's life`]]]
+],
+fil:[
+[3,`Ang Aso ni Lito`,`May alagang aso si Lito. Ang pangalan niya ay Bantay. Maitim ang balahibo ni Bantay at maputi ang kanyang buntot. Tuwing umaga, sabay silang tumatakbo sa bukid. Kapag umuuwi si Lito galing sa paaralan, sinasalubong siya ni Bantay at kumakawag ang buntot nito. Isang gabi, may magnanakaw na pumasok sa bakuran. Tumahol nang malakas si Bantay kaya nagising ang pamilya at nakatakbo ang magnanakaw. Mahal na mahal ng pamilya si Bantay.`,[
+[`Ano ang pangalan ng aso ni Lito?`,`Bantay`,`Brownie`,`Tanggol`,`Muning`],
+[`Ano ang kulay ng balahibo ni Bantay?`,`Itim`,`Puti`,`Kayumanggi`,`Dilaw`],
+[`Saan tumatakbo sina Lito at Bantay tuwing umaga?`,`Sa bukid`,`Sa palengke`,`Sa simbahan`,`Sa ilog`],
+[`Bakit nagising ang pamilya isang gabi?`,`Tumahol nang malakas si Bantay.`,`Umulan nang malakas.`,`May sunog sa kapitbahay.`,`Tumunog ang radyo.`],
+[`Ano ang katangian ni Bantay?`,`Matapat at maalaga sa pamilya`,`Tamad`,`Magnanakaw`,`Duwag`],
+[`Alin ang pinakamagandang pamagat ng kuwento?`,`Si Bantay, ang Matapat na Aso`,`Ang Magnanakaw`,`Ang Bukid`,`Ang Paaralan ni Lito`]]],
+[4,`Ang Bagyo`,`Biglang dumilim ang langit at lumakas ang hangin. Sinabi sa radyo na may paparating na bagyo. Agad na tinipon ni Nanay ang mga flashlight, tubig, at de-lata. Tinulungan naman ni Tatay si Mario na itali ang bubong ng kanilang bahay. Kinabukasan, malakas na ang ulan at binaha ang kalsada. Lumikas ang pamilya sa paaralan na ginawang evacuation center. Doon, may mga gurong nag-abot ng mainit na lugaw. Pagkalipas ng dalawang araw, humupa ang baha at ligtas silang nakauwi. Nagpasalamat sila na handa sila sa sakuna.`,[
+[`Ano ang sinabi sa radyo?`,`May paparating na bagyo.`,`Walang pasok bukas.`,`May sunog sa bayan.`,`Tag-araw na.`],
+[`Ano ang tinipon ni Nanay?`,`Flashlight, tubig, at de-lata`,`Mga laruan`,`Damit pang-handaan`,`Mga aklat`],
+[`Bakit itinali ang bubong ng bahay?`,`Upang hindi liparin ng malakas na hangin`,`Para gumanda ang bahay`,`Dahil luma na ito`,`Para ipinta ito`],
+[`Saan lumikas ang pamilya?`,`Sa paaralan`,`Sa palengke`,`Sa ibang bansa`,`Sa bundok`],
+[`Ano ang ibig sabihin ng "lumikas"?`,`Umalis sa lugar upang maging ligtas`,`Maglaro sa labas`,`Matulog nang mahimbing`,`Magluto ng pagkain`],
+[`Bakit nagpasalamat ang pamilya?`,`Dahil handa sila sa sakuna`,`Dahil nanalo sila sa lotto`,`Dahil walang pasok`,`Dahil umulan`]]],
+[4,`Ang Mabuting Kapitbahay`,`Matanda na at mag-isa sa bahay si Aling Rosa. Isang umaga, hindi siya lumabas para magdilig ng halaman. Nag-alala si Dindo, ang batang kapitbahay. Kumatok siya sa pinto ngunit walang sumagot. Agad siyang tumawag sa kanyang ina. Nang buksan nila ang pinto, nakita nilang nanghihina si Aling Rosa at mataas ang lagnat. Dinala nila siya sa health center. Ayon sa doktor, mabuti na lang at agad siyang nadala. Mula noon, tuwing hapon ay dinadalaw ni Dindo ang matanda para kumustahin.`,[
+[`Sino si Aling Rosa?`,`Matandang nag-iisa sa bahay`,`Guro ni Dindo`,`Ina ni Dindo`,`Doktor sa health center`],
+[`Bakit nag-alala si Dindo?`,`Hindi lumabas si Aling Rosa para magdilig ng halaman.`,`Nawala ang kanyang aso.`,`Gabi na at madilim.`,`Umuulan nang malakas.`],
+[`Ano ang nakita nila nang buksan ang pinto?`,`Nanghihina si Aling Rosa at mataas ang lagnat.`,`Natutulog si Aling Rosa.`,`Nagluluto si Aling Rosa.`,`Walang tao sa bahay.`],
+[`Bakit mabuti na lang na agad siyang nadala sa health center?`,`Naagapan ang kanyang karamdaman.`,`Libre ang gamot.`,`Malapit ang kanyang bahay.`,`Gusto niyang magbakasyon.`],
+[`Anong katangian ang ipinakita ni Dindo?`,`Mapagmalasakit`,`Mapagmataas`,`Walang pakialam`,`Matakaw`],
+[`Anong aral ang makukuha sa kuwento?`,`Dapat nating alalahanin at tulungan ang ating kapwa.`,`Huwag makialam sa iba.`,`Hayaan ang matatanda na mag-isa.`,`Umiwas sa may sakit.`]]],
+[5,`Si Dr. Jose Rizal`,`Si Dr. Jose Rizal ay isinilang noong Hunyo 19, 1861 sa Calamba, Laguna. Bata pa lang ay mahilig na siyang magbasa at magsulat ng tula. Nag-aral siya ng medisina at naglakbay sa Europa. Isinulat niya ang mga nobelang Noli Me Tangere at El Filibusterismo upang ilantad ang pang-aapi ng mga Espanyol. Hindi siya gumamit ng dahas kundi ng panulat. Noong Disyembre 30, 1896, binaril siya sa Bagumbayan. Hanggang ngayon, ginugunita ang kanyang kabayanihan sa buong bansa.`,[
+[`Saan isinilang si Rizal?`,`Calamba, Laguna`,`Cebu`,`Bulacan`,`Batangas`],
+[`Anong kurso ang kinuha ni Rizal?`,`Medisina`,`Abogasya`,`Inhinyeriya`,`Pagsasaka`],
+[`Bakit isinulat ni Rizal ang kanyang mga nobela?`,`Upang ilantad ang pang-aapi ng mga Espanyol`,`Upang yumaman`,`Upang libangin lamang ang mga bata`,`Upang magturo ng pagluluto`],
+[`Ano ang ginamit ni Rizal na sandata sa pakikipaglaban?`,`Panulat`,`Espada`,`Baril`,`Kanyon`],
+[`Ano ang kahulugan ng "ginugunita"?`,`Inaalala`,`Kinakalimutan`,`Binabago`,`Sinusunog`],
+[`Anong katangian ni Rizal ang masasalamin sa teksto?`,`Makabayan at matalino`,`Duwag at tamad`,`Mapagmataas at madamot`,`Mapaglaro at pabaya`]]],
+[5,`Ang Bakawan`,`Sa baybayin ng aming bayan, itinanim ng mga mag-aaral at mangingisda ang mga bakawan. Ang bakawan ay puno na tumutubo sa tabing-dagat. Ang mga ugat nito ay humuhuli sa lupa kaya hindi agad naaanod ang baybayin. Tirahan din ito ng mga isda, alimango, at hipon. Noong dumaan ang malakas na bagyo, hindi gaanong napinsala ang aming barangay dahil pinahina ng mga bakawan ang along humampas. Kaya naman patuloy namin itong inaalagaan at ipinagbabawal ang pagputol.`,[
+[`Ano ang bakawan?`,`Puno na tumutubo sa tabing-dagat`,`Isang uri ng isda`,`Uri ng bato`,`Isang bangka`],
+[`Sino ang nagtanim ng mga bakawan?`,`Mga mag-aaral at mangingisda`,`Mga turista`,`Mga guro lamang`,`Mga pulis`],
+[`Paano nakatutulong ang ugat ng bakawan?`,`Humuhuli ito sa lupa kaya hindi naaanod ang baybayin.`,`Nagbibigay ito ng ilaw sa gabi.`,`Nagpapainit ito ng tubig.`,`Nagbibigay ito ng amoy sa dagat.`],
+[`Bakit hindi gaanong napinsala ang barangay noong bagyo?`,`Pinahina ng mga bakawan ang along humampas.`,`Walang bagyong dumating.`,`Lumikas ang lahat ng tao.`,`Matibay ang lahat ng bahay.`],
+[`Ano ang kahulugan ng "napinsala"?`,`Nasira`,`Gumanda`,`Natuwa`,`Nagbago ng pangalan`],
+[`Ano ang dapat gawin batay sa teksto?`,`Alagaan at huwag putulin ang mga bakawan.`,`Putulin ang bakawan para gawing uling.`,`Magtapon ng basura sa dagat.`,`Iwan na lamang ang baybayin.`]]],
+[6,`Ang Alkansya ni Marites`,`Si Marites ay may alkansyang gawa sa kawayan. Tuwing recess, tinatabi niya ang limang piso mula sa kanyang baon. Tinutukso siya ng kanyang mga kaklase na kuripot daw siya. Hindi niya ito pinansin. Pagkaraan ng isang taon, binuksan niya ang alkansya at nabilang niya ang 1,200 piso. Nang magkasakit ang kanyang lolo, nagamit niya ang ipon pambili ng gamot. Tuwang-tuwa ang kanyang pamilya sa kanyang ginawa. Mula noon, hindi na siya tinukso ng mga kaklase; sa halip, ginaya pa nila siya.`,[
+[`Saan inilalagay ni Marites ang kanyang ipon?`,`Sa alkansyang gawa sa kawayan`,`Sa bangko`,`Sa bulsa`,`Sa bag`],
+[`Magkano ang tinatabi ni Marites tuwing recess?`,`Limang piso`,`Sampung piso`,`Isang piso`,`Dalawampung piso`],
+[`Bakit tinukso si Marites ng kanyang mga kaklase?`,`Kuripot daw siya.`,`Mayaman daw siya.`,`Tamad daw siya.`,`Mahina daw siya.`],
+[`Para saan ginamit ni Marites ang kanyang ipon?`,`Pambili ng gamot ng kanyang lolo`,`Pambili ng laruan`,`Pambili ng cellphone`,`Pambayad sa bakasyon`],
+[`Ano ang kahulugan ng salitang "kuripot"?`,`Madamot gumastos`,`Mapagbigay`,`Masipag`,`Mahiyain`],
+[`Anong aral ang makukuha sa kuwento?`,`Nakatutulong ang pag-iipon sa oras ng pangangailangan.`,`Gastusin agad ang lahat ng pera.`,`Mahalagang tuksuhin ang kaklase.`,`Hindi mahalaga ang baon.`]]],
+[6,`Ang Puerto Princesa Underground River`,`Ang Puerto Princesa Subterranean River National Park (PPSRNP) ay makikita sa Palawan. Ito ay matatagpuan sa hilagang kanlurang bahagi ng Puerto Princesa.\n\nIpinakikita sa tanyag na pook na ito ang mga higanteng limestone na nasa kuwebang pinaloloobanan ng ilog. Iba't ibang kamangha-manghang hugis ang nabuo mula sa mga limestone sa loob ng kuweba. Ang ilog ay tinatayang 8.2 kilometro ang haba at ito ay tumutuloy sa dagat. Ang kagandahan nito ang dahilan kung bakit nakilala ang Puerto Princesa Underground River bilang isa sa Pitong New Wonders of Nature.\n\nMakikita sa paligid ng ilog ang kabundukan at kagubatan. Ang makapal na kagubatan ang nagsisilbing tahanan ng ilang hayop na pambihira at endangered. Sa baybayin naman nito makikita ang halamang bakawan at mga coral reefs.\n\nMula nang maitalaga ang Puerto Princesa Underground River bilang isa sa Pitong New Wonders of Nature, dumami na ang mga taong gustong makita ito, maging Pilipino man o dayuhan.\n\nMaliban sa pagsakay sa bangka upang makita ang limestones sa loob ng kuweba, marami pang maaaring gawin dito na ikasasaya ng mga turista. Kinagigiliwan ng mga bisita rito ang jungle trekking, wildlife watching, mangrove forest tour at ang paglangoy sa tabing-dagat na puti ang buhangin.\n\n(Phil-IRI sample, Baitang 6)`,[
+[`Saang lalawigan matatagpuan ang Underground River?`,`Sa Palawan`,`Sa Bicol`,`Sa Iloilo`,`Sa Mindoro`],
+[`Ano ang kamangha-manghang tingnan sa loob ng kuweba ng Underground River?`,`Ang iba't ibang hugis ng limestone`,`Ang napakalinaw na tubig-ilog`,`Ang mga hayop sa loob ng kuweba`,`Ang mga halaman sa loob ng kuweba`],
+[`Bakit kaya dumami ang turistang bumibisita sa Underground River?`,`Naging tanyag ito sa buong mundo`,`Madali lang puntahan ito`,`Nakamamangha ang tubig sa ilog`,`Pambihira ang hugis ng kuweba sa ilog`],
+[`Bakit dapat alagaan ang mga hayop na makikita sa paligid ng Underground River?`,`Dahil ito ay endangered at pambihira`,`Dahil may karapatan itong mabuhay`,`Dahil makukulay ito at magaganda`,`Dahil maaari itong pagkakitaan`],
+[`Ano kaya ang kailangang gawin ng lokal na pamahalaan para sa Underground River?`,`Pangalagaan at proteksyonan ito`,`Magtayo ng iba pang water sports dito`,`Lagyan ito ng mga bahay-bakasyunan`,`Pagbawalan ang bumibisita rito`],
+[`Ayon sa seleksyon, ano pa ang maaaring gawin ng mga pumupunta rito maliban sa pagsakay sa bangka sa loob ng kuweba?`,`Lumangoy sa tabing-dagat`,`Mangisda sa ilog`,`Maglaro sa kuweba`,`Kumain ng masasarap na pagkain`],
+[`Ano kaya ang naramdaman ng mga Pilipino nang mahirang ang Underground River bilang isa sa Pitong New Wonders of Nature?`,`Natuwa dahil maipagmamalaki nila ito.`,`Nagulat dahil hindi ito dapat nangyari.`,`Nalito at nakipagtalo kung kailangang puntahan ito.`,`Nag-alala dahil magiging mahal na ang pagpunta rito.`],
+[`Alin sa sumusunod ang pinakamagandang sabihin sa mga turistang bumibisita sa Underground River?`,`Ingatan ang kapaligiran ng Underground River.`,`Kaunting halaman lamang ang kunin mula dito.`,`Iwasang mag-ingay habang nasa loob ng kuweba.`,`Ingatan ang pagkuha ng litrato sa Underground River.`]]],
+[6,`Ang Alamat ng Pinya`,`Noong unang panahon, may batang babae na nagngangalang Pinang. Mahal na mahal siya ng kanyang ina ngunit napakatamad niya. Lahat ng gawain ay ipinapagawa niya at kapag may hinahanap siya ay lagi niyang sinasabing, "Hindi ko makita!" Isang araw, nagkasakit ang ina. Inutusan niya si Pinang na magluto ng lugaw. Hindi alam ni Pinang kung nasaan ang sandok at kutsara kaya't muli siyang nagreklamo. Nainis ang ina at sinabing, "Sana'y magkaroon ka ng maraming mata nang makita mo na ang lahat!" Kinabukasan, wala na si Pinang. Sa bakuran ay may tumubong halaman na may maraming mata ang bunga. Tinawag itong pinya mula sa pangalan ni Pinang.`,[
+[`Ano ang ugali ni Pinang?`,`Tamad`,`Masipag`,`Matulungin`,`Mapagbigay`],
+[`Ano ang lagi niyang sinasabi kapag may hinahanap?`,`"Hindi ko makita!"`,`"Nariyan lang iyan!"`,`"Tulungan mo ako!"`,`"Salamat po!"`],
+[`Bakit nainis ang ina ni Pinang?`,`Nagreklamo pa rin si Pinang kahit may sakit ang ina.`,`Nawala ang sandok.`,`Umalis si Pinang nang walang paalam.`,`Maaga siyang nagising.`],
+[`Ano ang nangyari kay Pinang sa dulo ng kuwento?`,`Naging pinya`,`Naging bulaklak`,`Lumipat ng bayan`,`Natutong magluto`],
+[`Anong uri ng akda ito?`,`Alamat, dahil nagsasalaysay ito ng pinagmulan ng isang bagay`,`Pabula, dahil hayop ang tauhan`,`Tula, dahil may sukat at tugma`,`Balita, dahil totoong pangyayari ito`],
+[`Anong aral ang makukuha sa kuwento?`,`Huwag maging tamad at matutong magsikap.`,`Palaging magreklamo.`,`Mag-ipon ng kutsara at sandok.`,`Huwag magluto kapag may sakit.`]]],
+[7,`Palag Lang`,`Dito sa mundong ating ginagalawan,\nPalakasan na lang talaga ng loob ang labanan,\nDahil mapag-iiwanan ka kung palagi mong pagdududahan\nang iyong sariling kakayahan—\nNang hindi mo pa naman sinusubukan.\n\nWalang pag-unlad kung palagi kang pangungunahan ng takot na mabigo.\nHindi ka lalago kung ayaw mong makaranas ng pagkatalo.\nHindi ka matututo kung ayaw mong masaktan—\nSapagkat lahat naman ay proseso na kailangang pagdaanan.\n\nMaraming bagay ang kaya mong gawin.\nTiwala sa sarili at pusong puno ng pag-asa ang dapat mong piliin.\nLakasan mo lang ang iyong loob—\nKusa naman ito sa'yong ipagkakaloob.\n\nPalag lang—\nDahil lahat naman ay mabuti at hangarin at ipinaglalaban ay may patutunguhan.\n\nHinango ni Rolan D. Galamay sa TINTALATA · 109 salita (Phil-IRI sample, Baitang 7)`,[
+[`Batay sa akda, anong mangyayari sa isang tao kung palaging nagdududa sa sarili?`,`Mapag-iiwanan sa buhay`,`Mapanglaw ang buhay`,`Magiging matalino sa buhay`,`Magiging matagumpay sa buhay`],
+[`Ano ang tono ng tula?`,`Nagbibigay ng aral`,`Naglalarawan`,`Nagmumungkahi`,`Nagbibigay ng komento`],
+[`Alin sa sumusunod ang katangian ng persona ng tula?`,`Positibo sa buhay`,`Masayahin`,`Mapagkumbaba`,`Masigasig sa buhay`],
+[`"Tiwala sa sarili at pusong puno ng pag-asa ang dapat mong piliin." Ano ang ipinahihiwatig ng nakasalungguhit na pahayag na "pusong puno ng pag-asa"?`,`Pusong positibo sa lahat ng oras`,`Puso ang dapat sundin`,`Puso ang sukatan ng pag-asa`,`Pusong mapagbunyi sa lahat ng tagumpay`],
+[`"Hindi ka matututo kung ayaw mong masaktan — Sapagkat lahat naman ay proseso na kailangang pagdaanan." Alin sa sumusunod ang kasabihang angkop dito?`,`Walang mahirap na gawa 'pag dinaan sa tiyaga.`,`Kung may isinuksok, may dudukutin.`,`Pagmakitid ang kumot, magtiis kang mamalukbot.`,`Ang kaginhawaan ay nasa kasiyahan, at wala sa kasaganahan.`],
+[`"Palag lang — Dahil lahat naman ay mabuti at hangarin at ipinaglalaban ay may patutunguhan." Ano ang tono ng pahayag na ito?`,`Ipagpatuloy at laban ng buhay tungo sa tagumpay.`,`Ipagpatuloy ang pagiging mabuti sa kapwa.`,`Maging bukas ang isip sa lahat ng kabutihan.`,`Makakamit ang pag-asa sa pagiging mabuting tao.`],
+[`Alin sa sumusunod ang hayag na sinasabi sa tula?`,`Hindi ka matututo kung ayaw mong masaktan.`,`Edukasyon ang susi sa magandang kinabukasan.`,`Hindi ka lalago kung ayaw mong makaranas ng pagkatalo.`,`Walang pag-unlad kung walang pag-asa.`],
+[`Ano ang kakaiba sa tula?`,`Mayroong tugma ngunit walang sukat ang bawat saknong.`,`Mayroong tugma ang bawat saknong.`,`Mayroong pare-parehong sukat ang bawat saknong.`,`Mayroong sukat ngunit walang tugma ang bawat saknong.`],
+[`Anong paraan ang ginamit ng may akda sa tula?`,`Gumamit ng matatalinghagang pahayag`,`Gumamit ng mga simbolismo`,`Gumamit ng karaniwang salita`,`Gumamit ng masining na paglalarawan`],
+[`Para kanino inuukol ang binasang tula?`,`Para sa mga taong napapariwara sa buhay`,`Para sa mga taong masigasig sa buhay`,`Para sa mga taong matagumpay sa buhay`,`Para sa mga taong may karamdaman sa buhay`]],1],
+[7,`Wikang Filipino: Sagisag ng Ating Pagkakakilanlan`,`Ang wika ay higit pa sa mga salitang ginagamit natin sa araw-araw. Ito ang tulay na nag-uugnay sa mga tao at nagdadala ng ating kultura, kasaysayan, at paniniwala. Sa Pilipinas na may mahigit isandaang wika, ang Filipino ang nagsisilbing wikang pambansa na nagbubuklod sa mga Pilipino mula Batanes hanggang Tawi-Tawi. Gayunman, hindi nangangahulugang dapat nating kalimutan ang ating mga katutubong wika. Tulad ng mga halaman sa isang hardin, ang bawat wika ay may sariling ganda at dapat pangalagaan. Kapag namatay ang isang wika, kasama nitong naglalaho ang kaalaman at kuwento ng isang lahi.`,[
+[`Ayon sa teksto, ano ang wika?`,`Tulay na nag-uugnay sa mga tao at nagdadala ng kultura`,`Isang uri ng laro`,`Isang uri ng pagkain`,`Gamit lamang sa paaralan`],
+[`Ilan ang wika sa Pilipinas ayon sa teksto?`,`Mahigit isandaan`,`Isa lamang`,`Lima`,`Sampu`],
+[`Anong wika ang nagsisilbing wikang pambansa?`,`Filipino`,`Ingles`,`Cebuano`,`Ilokano`],
+[`Anong paraan ng pagpapahayag ang paghahambing ng wika sa mga halaman sa hardin?`,`Pagtutulad`,`Pagmamalabis`,`Pagpapalit-tawag`,`Pagtanggi`],
+[`Ano ang mangyayari kapag namatay ang isang wika?`,`Naglalaho ang kaalaman at kuwento ng isang lahi.`,`Dadami ang mga wika.`,`Magiging madali ang pag-aaral.`,`Walang mangyayari.`],
+[`Ano ang layunin ng may-akda?`,`Hikayatin ang mga mambabasa na pahalagahan ang wika`,`Magturo ng gramatika`,`Magbenta ng aklat`,`Magpatawa ng mga mambabasa`]]]
+]};
+
+let philLang='en';
+const philHtml=(p,verse)=>{const paras=verse?p.split('\n\n').map(s=>'<p>'+esc(s).replace(/\n/g,'<br>')+'</p>'):p.split(/\n+/).map(s=>'<p>'+esc(s)+'</p>');return paras.join('')};
+function philHome(){$('philLangBox').classList.remove('hidden');$('philListBox').classList.add('hidden');$('philBody').classList.add('hidden');$('philBody').innerHTML='';$('philNavList').classList.add('hidden');
+ $('philSub').textContent='Read the passage carefully, then answer the questions. Choose your language.';
+ $('philLangBox').style.gridTemplateColumns='repeat(auto-fit,minmax(260px,1fr))';
+ $('philLangBox').innerHTML=`<div class="card lang-card" tabindex="0" onclick="philList('en')"><div class="card-icon">📘</div><h3>English</h3><p>10 passages with multiple-choice questions</p></div><div class="card lang-card" tabindex="0" onclick="philList('fil')"><div class="card-icon">📕</div><h3>Filipino</h3><p>10 na seleksyon na may tanong na pamimilian</p></div>`}
+function philList(l){philLang=l;try{speechSynthesis.cancel()}catch(e){}
+ $('philLangBox').classList.add('hidden');$('philBody').classList.add('hidden');$('philBody').innerHTML='';$('philNavList').classList.remove('hidden');
+ const box=$('philListBox');box.classList.remove('hidden');const fil=l==='fil';
+ $('philSub').textContent=fil?'Pumili ng seleksyon. Basahin nang mabuti at sagutin ang mga tanong.':'Choose a passage. Read it carefully and answer the questions.';
+ box.innerHTML=`<h2 class="section-title" style="margin-top:0">${fil?'📕 Filipino: 10 Seleksyon':'📘 English: 10 Passages'}</h2><div class="cards">${PI[l].map((p,i)=>`<div class="card pcard" tabindex="0" onclick="philRead('${l}',${i})"><div class="pnum">${i+1}</div><div><h3>${esc(p[1])}</h3><p>${fil?'Baitang':'Grade'} ${p[0]} · ${p[3].length} ${fil?'tanong':'questions'}</p></div></div>`).join('')}</div>`;
+ window.scrollTo({top:0,behavior:'smooth'})}
+function philRead(l,i){const p=PI[l][i],fil=l==='fil';$('philListBox').classList.add('hidden');const b=$('philBody');b.classList.remove('hidden');
+ const html=`<div class="passage${p[4]?' verse':''}"><h4>${esc(p[1])}</h4>${philHtml(p[2],p[4])}</div>`;
+ const qs=p[3].map(([q,r,a,c,d])=>({pic:html,text:q,say:p[1]+'. '+p[2]+' '+q,answer:r,choices:shuf([r,a,c,d]),hint:fil?'Balikan ang teksto at hanapin ang pangungusap na sumasagot sa tanong.':'Go back to the passage and find the sentence that answers the question.',exp:fil?`Tamang sagot: <b>${esc(r)}</b>`:`Correct answer: <b>${esc(r)}</b>`}));
+ const run=()=>quiz('philBody',qs.map(q=>({...q,choices:shuf(q.choices)})),{xp:10,lang:l,title:p[1],again:run,back:()=>philList(l),backLabel:fil?'📋 Iba pang seleksyon':'📋 More passages'});run();window.scrollTo({top:0,behavior:'smooth'})}
+/* ---------- LITNUM INTERVENTION: short, picture-based activities for struggling learners ---------- */
+const nums=(a,lo=0)=>{const c=[a,a+1,a-1,a+2,a-2].filter((v,i,x)=>v>=lo&&x.indexOf(v)===i);return shuf([a,...shuf(c.filter(v=>v!==a)).slice(0,2)]).map(String)};
+const BS=[['🐱','cat'],['🐶','dog'],['🌞','sun'],['🚌','bus'],['🐟','fish'],['🐷','pig'],['🐔','hen'],['🎩','hat'],['🐜','ant'],['🥚','egg'],['🌙','moon'],['🍎','apple'],['🔑','key'],['🐍','snake'],['🦁','lion'],['🐒','monkey'],['🍌','banana'],['🚲','bike'],['🌳','tree'],['🏠','house']];
+const CV=[['🐱','cat'],['🐶','dog'],['🌞','sun'],['🚌','bus'],['🐷','pig'],['🐔','hen'],['🎩','hat'],['🛏️','bed'],['🐀','rat'],['🥫','can'],['🥤','cup'],['🦵','leg'],['🐝','bee'],['🪵','log'],['🐞','bug']].filter(x=>x[1].length===3&&!['bee'].includes(x[1]));
+const SY=[['cat',1],['dog',1],['sun',1],['school',1],['apple',2],['rabbit',2],['pencil',2],['flower',2],['table',2],['rainbow',2],['banana',3],['tomato',3],['umbrella',3],['bicycle',3],['computer',3],['pineapple',3],['elephant',3],['butterfly',3],['watermelon',4],['television',4],['helicopter',4]];
+const SW=['the','and','is','are','was','you','they','said','have','with','because','there','where','what','from','going','little','again','could','said','of','to'];
+const RA=[['🐱','The cat sat on the mat. The cat is fat.','Where did the cat sit?','On the mat','In the box','On the bed'],
+['🐔','A hen has ten eggs. She sits on the eggs.','How many eggs does the hen have?','Ten','Two','Five'],
+['🌧️','It is raining today. Mia has a red umbrella.','What does Mia have?','A red umbrella','A blue bag','A yellow hat'],
+['🚌','Ben rides the bus to school. The bus is big and yellow.','What color is the bus?','Yellow','Red','Green'],
+['🐶','Dan has a dog. The dog likes to run in the park.','Where does the dog like to run?','In the park','In the house','In the river'],
+['🍎','Lia ate an apple. It was sweet and red.','How did the apple taste?','Sweet','Sour','Bitter'],
+['🌞','It is a hot day. Tom and Ana swim in the sea.','What do Tom and Ana do?','Swim in the sea','Play in the rain','Sleep in bed'],
+['📚','Sam has three books. He reads one book every night.','How many books does Sam have?','Three','One','Ten'],
+['🐟','The fish is in the bowl. It swims all day.','Where is the fish?','In the bowl','In the sea','On the table'],
+['🌙','The moon is up. The stars are out. It is time for bed.','What time is it?','Bedtime','Lunchtime','Morning']];
+const RH=[['cat','hat'],['dog','log'],['sun','run'],['bed','red'],['pig','big'],['hen','ten'],['cake','lake'],['star','car'],['tree','bee'],['ball','wall'],['boat','coat'],['light','night'],['rain','train'],['moon','spoon'],['book','cook']];
+const SH=[['🔴','circle'],['🟦','square'],['🔺','triangle'],['⭐','star'],['❤️','heart'],['🔷','diamond']];
+const bigE=e=>`<span class="em big">${e}</span>`;
+const LN={
+lit:{name:'Literacy',icon:'📖',blurb:'Letters, sounds, words, and short reading activities with picture clues.',acts:[
+{icon:'🔤',name:'Beginning Sounds',desc:'Say the picture word. Pick the letter it starts with.',gen:()=>shuf(BS).slice(0,10).map(([e,w])=>{const r=w[0],o=shuf(LETTERS.filter(l=>l!==r)).slice(0,2),f=l=>l.toUpperCase()+' '+l;return{pic:bigE(e),text:'What letter does this word start with?',say:'What letter does this word start with?',answer:f(r),choices:shuf([r,...o]).map(f),hint:`Say "${w}" slowly. What is the first sound you hear?`,exp:`<b>${w}</b> starts with <b>${r.toUpperCase()} ${r}</b>.`}})},
+{icon:'🧩',name:'Missing Vowel',desc:'Complete short words like c_t by choosing the vowel.',gen:()=>shuf(CV).slice(0,10).map(([e,w])=>{const v=w[1],o=shuf('aeiou'.split('').filter(x=>x!==v)).slice(0,2);return{pic:bigE(e),text:`Which letter is missing?<br><b style="font-size:34px;letter-spacing:6px">${w[0]} _ ${w[2]}</b>`,say:`Which letter is missing in ${w[0]}, blank, ${w[2]}?`,answer:v,choices:shuf([v,...o]),hint:'Say the word. Listen to the middle sound.',exp:`The word is <b>${w}</b>.`}})},
+{icon:'👏',name:'Clap the Syllables',desc:'Clap each beat in a word and count the syllables.',gen:()=>shuf(SY).slice(0,10).map(([w,n])=>({pic:bigE('👏'),text:`How many syllables (claps) are in <b>${w}</b>?`,say:`How many syllables are in ${w}?`,answer:String(n),choices:nums(n,1),hint:`Clap as you say it: ${w}. Each clap is one syllable.`,exp:`<b>${w}</b> has <b>${n}</b> syllable${n>1?'s':''}.`}))},
+{icon:'👀',name:'Sight Words',desc:'Find common words you see all the time when reading.',gen:()=>shuf([...new Set(SW)]).slice(0,10).map(w=>({pic:bigE('👀'),text:`Find the word <b>"${w}"</b>.`,say:`Find the word ${w}.`,answer:w,choices:shuf([w,...shuf([...new Set(SW)].filter(x=>x!==w)).slice(0,2)]),hint:`Look at the first letter and the last letter of "${w}".`,exp:`This word says <b>${w}</b>.`}))},
+{icon:'🎵',name:'Rhyming Words',desc:'Match words that sound the same at the end.',gen:()=>shuf(RH).slice(0,10).map(([a,b])=>{const flip=rnd(0,1),w=flip?b:a,r=flip?a:b,o=shuf(RH.filter(x=>x[0]!==a).flatMap(x=>x)).filter(x=>x!==w&&x!==r).slice(0,2);return{pic:bigE('🎵'),text:`Which word rhymes with <b>${w}</b>?`,say:`Which word rhymes with ${w}?`,answer:r,choices:shuf([r,...o]),hint:`Say "${w}" out loud. Which word ends with the same sound?`,exp:`<b>${w}</b> and <b>${r}</b> rhyme.`}})},
+{icon:'📖',name:'Read and Answer',desc:'Read two short sentences, then answer one easy question.',gen:()=>shuf(RA).map(([e,t,q,r,a,b])=>({pic:`<div class="problem" style="text-align:left"><span class="em">${e}</span><br>${t}</div>`,text:q,say:t+' '+q,answer:r,choices:shuf([r,a,b]),hint:'Read the sentences again. Point to the words that answer the question.',exp:`The text says: <b>${r}</b>.`}))}
+]},
+num:{name:'Numeracy',icon:'🔢',blurb:'Counting, number sense, and early operations using pictures and small numbers.',acts:[
+{icon:'🍎',name:'Count the Objects',desc:'Count the pictures from 1 up to 20.',gen:()=>Array.from({length:10},(_,i)=>{const[e,o]=pick(OBJ),n=Math.min(20,rnd(1,4+i*2));return{pic:`<span class="em">${e.repeat(n)}</span>`,text:'How many do you see?',say:'How many do you see?',answer:String(n),choices:nums(n,1),hint:'Touch each picture once as you count. Do not skip any.',exp:`There are <b>${n}</b> ${o}.`}})},
+{icon:'🔢',name:'Before, After, Between',desc:'Find the missing number in a counting line.',gen:()=>Array.from({length:10},(_,i)=>{const n=rnd(2,i<5?19:98),t=i%3;const q=t===0?[`What number comes <b>after ${n}</b>?`,n+1,`Count on: ${n}, then ${n+1}.`]:t===1?[`What number comes <b>before ${n}</b>?`,n-1,`Count back: ${n}, then ${n-1}.`]:[`What number is <b>between ${n-1} and ${n+1}</b>?`,n,`Counting: ${n-1}, ${n}, ${n+1}.`];return{pic:bigE('🔢'),text:q[0],say:q[0],answer:String(q[1]),choices:nums(q[1],0),hint:'Say the numbers in order: start at a small number and count.',exp:q[2]}})},
+{icon:'⚖️',name:'More, Fewer, or Equal',desc:'Compare two groups of pictures.',gen:()=>Array.from({length:10},(_,i)=>{const[e]=pick(OBJ);let a=rnd(1,9),b=rnd(1,9);if(i%5===4)b=a;else if(a===b)b=a%9+1;const more=i%2===0;const ans=a===b?'They are equal':(more?(a>b?'Top group':'Bottom group'):(a<b?'Top group':'Bottom group'));return{pic:`<div class="em">${e.repeat(a)}</div><b>vs</b><div class="em">${e.repeat(b)}</div>`,text:`Which group has <b>${more?'MORE':'FEWER'}</b>?`,say:`Which group has ${more?'more':'fewer'}?`,answer:ans,choices:['Top group','Bottom group','They are equal'],hint:'Count the top group. Then count the bottom group. Compare the two numbers.',exp:`Top = ${a}, Bottom = ${b}. Answer: <b>${ans}</b>.`}})},
+{icon:'➕',name:'Add with Pictures',desc:'Put groups together and find the total.',gen:()=>Array.from({length:10},(_,i)=>{const[e,o]=pick(OBJ),lim=i<5?10:20,a=rnd(1,lim-2),b=rnd(1,Math.min(lim-a,i<5?5:9));return{pic:pics(e,a)+' <b class="em">➕</b> '+pics(e,b),text:`${a} + ${b} = ?`,say:`${a} plus ${b}. How many in all?`,answer:String(a+b),choices:nums(a+b,0),hint:`Start at ${a}. Count on ${b} more.`,exp:`${a} + ${b} = <b>${a+b}</b>`}})},
+{icon:'➖',name:'Take Away with Pictures',desc:'Take some away and find how many are left.',gen:()=>Array.from({length:10},(_,i)=>{const[e,o]=pick(OBJ),a=rnd(i<5?3:8,i<5?10:18),b=rnd(1,Math.min(a-1,i<5?5:9));return{pic:pics(e,a),text:`There are ${a} ${o}. Take away ${b}.<br><b>${a} − ${b} = ?</b>`,say:`There are ${a} ${o}. Take away ${b}. How many are left?`,answer:String(a-b),choices:nums(a-b,0),hint:`Start at ${a}. Count back ${b}.`,exp:`${a} − ${b} = <b>${a-b}</b>`}})},
+{icon:'🟦',name:'Tens and Ones',desc:'Use tens blocks and ones to understand two-digit numbers.',gen:()=>Array.from({length:10},(_,i)=>{const t=rnd(1,9),o=rnd(1,9),n=t*10+o,m=i%2,pic=`<span class="em">${'🟦'.repeat(t)}</span><br><span class="em">${'🔸'.repeat(o)}</span><br><small>🟦 = 10 &nbsp; 🔸 = 1</small>`;return m?{pic,text:`How many <b>tens</b> are in <b>${n}</b>?`,say:`How many tens are in ${n}?`,answer:String(t),choices:nums(t,0),hint:'The first digit of a two-digit number tells the tens.',exp:`${n} = ${t} tens and ${o} ones.`}:{pic,text:`What number is <b>${t} tens and ${o} ones</b>?`,say:`What number is ${t} tens and ${o} ones?`,answer:String(n),choices:shuf([n,o*10+t===n?n+1:o*10+t,n+10].map(String)),hint:'Tens go first, then ones. Example: 2 tens and 5 ones is 25.',exp:`${t} tens = ${t*10}, plus ${o} ones = <b>${n}</b>.`}})},
+{icon:'🪜',name:'Skip Counting & Patterns',desc:'Count by 2s, 5s, and 10s and find what comes next.',gen:()=>Array.from({length:10},(_,i)=>{const st=[2,5,10,2,5,10,3,2,5,10][i],s=Array.from({length:4},(_,k)=>st*(k+1)),a=st*5;return{pic:`<span class="em" style="font-size:34px">${s.join(', ')}, ❓</span>`,text:`What comes next? Count by <b>${st}s</b>.`,say:`Count by ${st}s. What comes next?`,answer:String(a),choices:shuf([a,a-st+1,a+st].map(String)),hint:`Add ${st} each time: ${s[2]} + ${st} = ?`,exp:`${s[3]} + ${st} = <b>${a}</b>`}})},
+{icon:'🔺',name:'Know the Shapes',desc:'Name shapes you see around you.',gen:()=>shuf([...SH,...SH]).slice(0,10).map(([e,n])=>({pic:bigE(e),text:'What shape is this?',say:'What shape is this?',answer:n,choices:shuf([n,...shuf(SH.filter(x=>x[1]!==n)).slice(0,2).map(x=>x[1])]),hint:'Count the corners and sides. Does it have curves?',exp:`This is a <b>${n}</b>.`}))}
+]}};
+const LETTERS='abcdefghijklmnopqrstuvwxyz'.split('');
+let lnKind=null;
+function lnHome(){lnKind=null;$('lnList').classList.add('hidden');$('lnBody').classList.add('hidden');$('lnBody').innerHTML='';$('lnNavBack').classList.add('hidden');
+ $('lnTop').classList.remove('hidden');$('lnTop').innerHTML=Object.entries(LN).map(([k,v])=>`<div class="card big-card" tabindex="0" onclick="lnList('${k}')"><div class="card-icon">${v.icon}</div><h3>${v.name}</h3><p>${v.blurb}</p><span class="chip">${v.acts.length} activities</span></div>`).join('')}
+function lnList(k){lnKind=k;const v=LN[k];$('lnTop').classList.add('hidden');$('lnBody').classList.add('hidden');$('lnBody').innerHTML='';$('lnNavBack').classList.remove('hidden');
+ const l=$('lnList');l.classList.remove('hidden');
+ l.innerHTML=`<h2 class="section-title" style="margin-top:0">${v.icon} ${v.name} Activities</h2><p style="color:var(--mut);margin-bottom:4px">Each activity has 10 short questions. Tap 🔊 to hear it, tap 💡 for a hint, and take your time.</p><div class="cards">${v.acts.map((a,i)=>`<div class="card" tabindex="0" onclick="lnStart('${k}',${i})"><div class="card-icon">${a.icon}</div><h3>${a.name}</h3><p>${a.desc}</p></div>`).join('')}</div>`;
+ window.scrollTo({top:0,behavior:'smooth'})}
+function lnStart(k,i){const a=LN[k].acts[i];$('lnList').classList.add('hidden');const b=$('lnBody');b.classList.remove('hidden');
+ const run=()=>quiz('lnBody',a.gen(),{xp:10,again:run,title:a.name,back:()=>lnList(k),backLabel:'📋 More activities'});run();window.scrollTo({top:0,behavior:'smooth'})}
+
+
+/* ---------- offline / WebView support ---------- */
+(function(){
+ let cur='home';
+ const _open=openPage;
+ openPage=function(p){_open(p);if(p!==cur){try{history.pushState({p:p},'')}catch(e){}}cur=p};
+ try{history.replaceState({p:'home'},'')}catch(e){}
+ window.addEventListener('popstate',e=>{const p=(e.state&&e.state.p)||'home';
+  // step back inside a section first (passage -> list -> language, activity -> list -> menu)
+  if(cur==='philiri'&&!$('philBody').classList.contains('hidden')){history.pushState({p:'philiri'},'');philList(philLang);return}
+  if(cur==='philiri'&&!$('philListBox').classList.contains('hidden')){history.pushState({p:'philiri'},'');philHome();return}
+  if(cur==='litnum'&&!$('lnBody').classList.contains('hidden')){history.pushState({p:'litnum'},'');lnList(lnKind);return}
+  if(cur==='litnum'&&!$('lnList').classList.contains('hidden')){history.pushState({p:'litnum'},'');lnHome();return}
+  if(cur!=='home'){cur='home';showPage('home');return}
+ });
+ if(!('speechSynthesis' in window)&&!window.LuminariaTTS){const st=document.createElement('style');st.textContent='#spk{display:none!important}';document.head.appendChild(st)}
+})();
+
+$('enterBtn').onclick=()=>{const c=$('cover');c.classList.add('leave');setTimeout(()=>c.remove(),500);window.scrollTo(0,0)};
+$('enterBtn').focus();
+</script>
+</body>
+</html>
